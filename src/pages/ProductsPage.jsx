@@ -1,24 +1,30 @@
-import Loader from "../components/Loader";
-import Cart from "../components/Cart";
-
+import { useEffect, useState } from "react";
 import { useProducts } from "../context/ProductsContext";
 
+import Cart from "../components/Cart";
+
+import Loader from "../components/Loader";
 import styles from "./ProductsPage.module.css";
 import { ImSearch } from "react-icons/im";
-import { useEffect, useState } from "react";
 import { FaListUl } from "react-icons/fa";
 
 function ProductsPage() {
   const products = useProducts();
   const [search, setSearch] = useState("");
   const [displayed, setDisplayed] = useState([]);
+  const [query, setQuery] = useState({});
 
   useEffect(() => {
     setDisplayed(products);
   }, [products]);
 
+  useEffect(() => {
+    console.log(query);
+  }, [query]);
+
   const searchHandler = () => {
-    console.log("Searching for:", search);
+    setQuery((query) => ({ ...query, search }));
+    setSearch("");
   };
 
   const categoryHandler = (e) => {
@@ -28,6 +34,7 @@ function ProductsPage() {
     console.log(category);
 
     if (tagName !== "LI") return;
+    setQuery((query) => ({ ...query, category }));
   };
 
   return (
