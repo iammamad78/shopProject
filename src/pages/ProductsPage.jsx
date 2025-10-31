@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import styles from "./ProductsPage.module.css";
 import { ImSearch } from "react-icons/im";
 import { FaListUl } from "react-icons/fa";
+import { filterProducts, searchProducts } from "../helper/helper";
 
 function ProductsPage() {
   const products = useProducts();
@@ -14,12 +15,17 @@ function ProductsPage() {
   const [displayed, setDisplayed] = useState([]);
   const [query, setQuery] = useState({});
 
+  console.log(products);
+
   useEffect(() => {
     setDisplayed(products);
   }, [products]);
 
   useEffect(() => {
-    console.log(query);
+    let finalProducts = searchProducts(products, query.search);
+    finalProducts = filterProducts(finalProducts, query.category);
+
+    setDisplayed(finalProducts);
   }, [query]);
 
   const searchHandler = () => {
@@ -71,7 +77,7 @@ function ProductsPage() {
               <li>Electronics</li>
               <li>Jewelery</li>
               <li>Men's Clothing</li>
-              <li>Women`s Clothing</li>
+              <li>Women's Clothing</li>
             </ul>
           </div>
         </div>
