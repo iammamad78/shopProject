@@ -4,17 +4,16 @@ import { useProducts } from "../context/ProductsContext";
 
 import Loader from "../components/Loader";
 import styles from "./ProductsPage.module.css";
-import { ImSearch } from "react-icons/im";
-import { FaListUl } from "react-icons/fa";
 
 import {
-  createQueryObject,
   filterProducts,
   getInitialQuery,
   searchProducts,
 } from "../helper/helper";
 
 import Cart from "../components/Cart";
+import SearchBox from "../components/SearchBox";
+import Sidebar from "../components/Sidebar";
 
 function ProductsPage() {
   const products = useProducts();
@@ -37,34 +36,9 @@ function ProductsPage() {
     setDisplayed(finalProducts);
   }, [query]);
 
-  const searchHandler = () => {
-    setQuery((query) => createQueryObject(query, { search }));
-  };
-
-  const categoryHandler = (e) => {
-    const { tagName } = e.target;
-    const category = e.target.innerText.toLowerCase();
-
-    console.log(category);
-
-    if (tagName !== "LI") return;
-    setQuery((query) => createQueryObject(query, { category }));
-  };
-
   return (
     <>
-      {/* Search Input */}
-      <div>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value.toLocaleLowerCase().trim())}
-        />
-        <button onClick={searchHandler}>
-          <ImSearch />
-        </button>
-      </div>
+      <SearchBox search={search} setSearch={setSearch} setQuery={setQuery} />
 
       <div className={styles.container}>
         {/* Main Section */}
@@ -75,20 +49,7 @@ function ProductsPage() {
           ))}
         </div>
 
-        {/* Sidebar */}
-        <div>
-          <div>
-            <FaListUl />
-            <p>Categories</p>
-            <ul onClick={categoryHandler}>
-              <li>All</li>
-              <li>Electronics</li>
-              <li>Jewelery</li>
-              <li>Men's Clothing</li>
-              <li>Women's Clothing</li>
-            </ul>
-          </div>
-        </div>
+        <Sidebar setQuery={setQuery} />
       </div>
     </>
   );
