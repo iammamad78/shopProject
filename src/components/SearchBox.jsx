@@ -1,5 +1,5 @@
 import { ImSearch } from "react-icons/im";
-
+import styles from "./SearchBox.module.css";
 import { createQueryObject } from "../helper/helper";
 
 function SearchBox({ search, setSearch, setQuery }) {
@@ -8,7 +8,7 @@ function SearchBox({ search, setSearch, setQuery }) {
   };
 
   return (
-    <div>
+    <div className={styles.search}>
       <input
         type="text"
         placeholder="Search..."
