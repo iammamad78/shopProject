@@ -1,11 +1,18 @@
-import { TbListDetails, TbShoppingBagCheck } from "react-icons/tb";
+import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-
-import styles from "./Cart.module.css";
 import { shortenText } from "../helper/helper";
+
+import { TbListDetails, TbShoppingBagCheck } from "react-icons/tb";
+import styles from "./Cart.module.css";
 
 function Cart({ product }) {
   const { title, price, image, id } = product;
+
+  const [state, dispatch] = useCart();
+
+  const clickHandler = () => {
+    dispatch({ type: "Add", payload: product });
+  };
 
   return (
     <div className={styles.card}>
@@ -17,7 +24,7 @@ function Cart({ product }) {
           <TbListDetails />
         </Link>
         <div>
-          <button>
+          <button onClick={clickHandler}>
             <TbShoppingBagCheck />
           </button>
         </div>
