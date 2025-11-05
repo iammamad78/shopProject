@@ -1,9 +1,31 @@
 import { createContext, useContext, useReducer } from "react";
+import { sumProducts } from "../helper/helper";
 
-const initialState = {};
+const initialState = {
+  selectedProducts: [],
+  itemsCounter: 0,
+  totalPrice: 0,
+  checkout: false,
+};
 
 const reducer = (state, action) => {
   console.log(action);
+  switch (action.type) {
+    case "ADD_ITEM":
+      if (
+        !state.selectedProducts.find((item) => item.id === action.payload.id)
+      ) {
+        state.selectedProducts.push({ ...action.payload, quantity: 1 });
+      }
+      return {
+        ...state,
+        ...sumProducts(state.selectedProducts),
+        checkout: false,
+      };
+
+    default:
+      throw new Error("Invalid Action!");
+  }
 };
 
 const CartContext = createContext();

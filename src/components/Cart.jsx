@@ -9,9 +9,10 @@ function Cart({ product }) {
   const { title, price, image, id } = product;
 
   const [state, dispatch] = useCart();
+  console.log(state);
 
   const clickHandler = () => {
-    dispatch({ type: "Add", payload: product });
+    dispatch({ type: "ADD_ITEM", payload: product });
   };
 
   return (
