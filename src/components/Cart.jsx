@@ -12,7 +12,7 @@ function Cart({ product }) {
   console.log(state);
 
   const clickHandler = () => {
-    dispatch({ type: "ADD_ITEM", payload: product });
+    dispatch({ type: "REMOVE_ITEM", payload: product });
   };
 
   return (
