@@ -12,7 +12,6 @@ function Cart({ product }) {
   const [state, dispatch] = useCart();
 
   const quantity = productsQuantity(state, id);
-  console.log(quantity);
 
   const clickHandler = (type) => {
     dispatch({ type, payload: product });
